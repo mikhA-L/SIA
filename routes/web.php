@@ -24,3 +24,5 @@ Route::post('/logout', [LoginController::class, 'logout'])
 Route::middleware(['auth', 'role:admin'])->get('/admin', fn () => view('dashboard.admin'))->name('admin.home');
 Route::middleware(['auth', 'role:dosen'])->get('/dosen', fn () => view('dashboard.dosen'))->name('dosen.home');
 Route::middleware(['auth', 'role:mahasiswa'])->get('/mahasiswa', fn () => view('dashboard.mahasiswa'))->name('mahasiswa.home');
+
+require __DIR__.'/demo.php';
