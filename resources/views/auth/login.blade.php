@@ -147,6 +147,8 @@
                 </div>
 
                 <button type="submit" class="btn-masuk">Masuk</button>
+
+                <p>Belum punya akun? <a href="{{ route('register') }}">Daftar</a></p>
             </form>
 
             <p class="bantuan">Lupa kata sandi? Hubungi admin prodi untuk mengatur ulang.</p>
