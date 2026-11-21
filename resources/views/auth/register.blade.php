@@ -7,20 +7,15 @@
 </head>
 <body>
     <h1>Daftar Akun Mahasiswa</h1>
+    <p>Gunakan NIM yang sudah didaftarkan admin.</p>
 
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
         <div>
-            <label for="name">Nama lengkap</label>
-            <input id="name" type="text" name="name" value="{{ old('name') }}" required>
-            @error('name') <p>{{ $message }}</p> @enderror
-        </div>
-
-        <div>
-            <label for="username">Username / NIM</label>
-            <input id="username" type="text" name="username" value="{{ old('username') }}" required>
-            @error('username') <p>{{ $message }}</p> @enderror
+            <label for="nim">NIM</label>
+            <input id="nim" type="text" name="nim" value="{{ old('nim') }}" required>
+            @error('nim') <p>{{ $message }}</p> @enderror
         </div>
 
         <div>
