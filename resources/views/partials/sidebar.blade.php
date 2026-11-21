@@ -4,10 +4,10 @@
     $menus = [
         'admin' => [
             ['Beranda', '/admin', 'admin', true],
-            ['Data mahasiswa', '/demo/mahasiswa', 'demo/mahasiswa*', true],
-            ['Data dosen', '/demo/dosen', 'demo/dosen*', true],
-            ['Mata kuliah', '/demo/mata-kuliah', 'demo/mata-kuliah*', true],
-            ['Kelas', '/demo/kelas', 'demo/kelas*', true],
+            ['Data mahasiswa', '/admin/mahasiswa', 'admin/mahasiswa*', true],
+            ['Data dosen', '/demo/dosen', 'demo/dosen*', false],
+            ['Mata kuliah', '/admin/mata-kuliah', 'admin/mata-kuliah*', true],
+            ['Kelas', '/demo/kelas', 'demo/kelas*', false],
             ['Persetujuan KRS', '/admin/krs', 'admin/krs*', false],
         ],
         'dosen' => [
@@ -16,7 +16,7 @@
         ],
         'mahasiswa' => [
             ['Beranda', '/mahasiswa', 'mahasiswa', true],
-            ['KRS', '/mahasiswa/krs', 'mahasiswa/krs*', false],
+            ['KRS', '/mahasiswa/krs', 'mahasiswa/krs*', true],
             ['Nilai', '/mahasiswa/nilai', 'mahasiswa/nilai*', false],
             ['Jadwal kuliah', '/mahasiswa/jadwal', 'mahasiswa/jadwal*', false],
         ],

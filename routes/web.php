@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Mahasiswa\KrsController;
 use App\Http\Controllers\Admin\MahasiswaController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
@@ -28,6 +29,12 @@ Route::post('/logout', [LoginController::class, 'logout'])
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('mahasiswa', MahasiswaController::class)->except('show');
+});
+
+Route::middleware(['auth', 'role:mahasiswa'])->prefix('mahasiswa')->name('mahasiswa.')->group(function () {
+    Route::get('/krs', [KrsController::class, 'index'])->name('krs.index');
+    Route::post('/krs', [KrsController::class, 'store'])->name('krs.store');
+    Route::delete('/krs/{krs}', [KrsController::class, 'destroy'])->name('krs.destroy');
 });
 
 Route::resource('mata-kuliah', MataKuliahController::class);
