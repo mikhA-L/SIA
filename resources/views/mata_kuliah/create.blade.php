@@ -25,7 +25,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('mata-kuliah.store') }}" method="POST">
+                    <form action="{{ route('admin.mata-kuliah.store') }}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">Kode Mata Kuliah</label>
@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <a href="{{ route('mata-kuliah.index') }}" class="btn btn-secondary">Kembali</a>
+                            <a href="{{ route('admin.mata-kuliah.index') }}" class="btn btn-secondary">Kembali</a>
                             <button type="submit" class="btn btn-primary">Simpan Data</button>
                         </div>
                     </form>

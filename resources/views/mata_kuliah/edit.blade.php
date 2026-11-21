@@ -25,7 +25,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('mata-kuliah.update', $mataKuliah->id) }}" method="POST">
+                    <form action="{{ route('admin.mata-kuliah.update', $mataKuliah->id) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="mb-3">
@@ -47,7 +47,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <a href="{{ route('mata-kuliah.index') }}" class="btn btn-secondary">Kembali</a>
+                            <a href="{{ route('admin.mata-kuliah.index') }}" class="btn btn-secondary">Kembali</a>
                             <button type="submit" class="btn btn-warning">Update Data</button>
                         </div>
                     </form>

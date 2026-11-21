@@ -6,7 +6,7 @@
             ['Beranda', '/admin', 'admin', true],
             ['Data mahasiswa', '/demo/mahasiswa', 'demo/mahasiswa*', true],
             ['Data dosen', '/demo/dosen', 'demo/dosen*', true],
-            ['Mata kuliah', '/demo/mata-kuliah', 'demo/mata-kuliah*', true],
+            ['Mata kuliah', '/demo/admin.mata-kuliah', 'demo/admin.mata-kuliah*', true],
             ['Kelas', '/demo/kelas', 'demo/kelas*', true],
             ['Persetujuan KRS', '/admin/krs', 'admin/krs*', false],
         ],

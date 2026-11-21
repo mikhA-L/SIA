@@ -11,7 +11,7 @@
     <div class="card shadow-sm">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Daftar Mata Kuliah</h5>
-            <a href="{{ route('mata-kuliah.create') }}" class="btn btn-light btn-sm fw-bold">+ Tambah Mata Kuliah</a>
+            <a href="{{ route('admin.mata-kuliah.create') }}" class="btn btn-light btn-sm fw-bold">+ Tambah Mata Kuliah</a>
         </div>
         <div class="card-body">
             @if(session('success'))
@@ -42,8 +42,8 @@
                                 <td class="text-center">{{ $mk->sks }}</td>
                                 <td class="text-center">{{ $mk->semester }}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('mata-kuliah.edit', $mk->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                    <form action="{{ route('mata-kuliah.destroy', $mk->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus mata kuliah ini?')">
+                                    <a href="{{ route('admin.mata-kuliah.edit', $mk->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                    <form action="{{ route('admin.mata-kuliah.destroy', $mk->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus mata kuliah ini?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm">Hapus</button>

@@ -28,9 +28,10 @@ Route::post('/logout', [LoginController::class, 'logout'])
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('mahasiswa', MahasiswaController::class)->except('show');
+    Route::resource('mata-kuliah', MataKuliahController::class)->except('show');
 });
 
-Route::resource('mata-kuliah', MataKuliahController::class);
+
 
 Route::middleware(['auth', 'role:admin'])->get('/admin', fn () => view('dashboard.admin'))->name('admin.home');
 Route::middleware(['auth', 'role:dosen'])->get('/dosen', fn () => view('dashboard.dosen'))->name('dosen.home');
