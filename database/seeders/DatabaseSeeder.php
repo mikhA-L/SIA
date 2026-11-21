@@ -23,5 +23,7 @@ class DatabaseSeeder extends Seeder
                 $data + ['password' => Hash::make('password123')]
             );
         }
+        
+        $this->call(AkunContohSeeder::class);
     }
 }
