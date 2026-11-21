@@ -29,7 +29,7 @@ class MataKuliahController extends Controller
 
         MataKuliah::create($validated);
 
-        return redirect()->route('mata-kuliah.index')->with('success', 'Data mata kuliah berhasil ditambahkan.');
+        return redirect()->route('admin.mata-kuliah.index')->with('success', 'Data mata kuliah berhasil ditambahkan.');
     }
 
     public function edit(MataKuliah $mataKuliah)
@@ -48,13 +48,13 @@ class MataKuliahController extends Controller
 
         $mataKuliah->update($validated);
 
-        return redirect()->route('mata-kuliah.index')->with('success', 'Data mata kuliah berhasil diperbarui.');
+        return redirect()->route('admin.mata-kuliah.index')->with('success', 'Data mata kuliah berhasil diperbarui.');
     }
 
     public function destroy(MataKuliah $mataKuliah)
     {
         $mataKuliah->delete();
 
-        return redirect()->route('mata-kuliah.index')->with('success', 'Data mata kuliah berhasil dihapus.');
+        return redirect()->route('admin.mata-kuliah.index')->with('success', 'Data mata kuliah berhasil dihapus.');
     }
 }
