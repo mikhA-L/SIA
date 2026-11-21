@@ -59,7 +59,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('demo')->group(function () {
                     'options' => ['Aktif' => 'Aktif', 'Cuti' => 'Cuti', 'Non-aktif' => 'Non-aktif']],
             ],
         ],
-        'mata-kuliah' => [
+        'admin.mata-kuliah' => [
             'judul' => 'Mata kuliah',
             'sub' => 'Kelola daftar mata kuliah dan bobot SKS.',
             'tambahLabel' => 'Tambah mata kuliah',
