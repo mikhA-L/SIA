@@ -49,4 +49,9 @@ class User extends Authenticatable
             default => 'Mahasiswa',
         };
     }
+
+    public function mahasiswa()
+    {
+        return $this->hasOne(Mahasiswa::class);
+    }
 }
