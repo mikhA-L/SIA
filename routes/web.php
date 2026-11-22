@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Mahasiswa\KrsController;
 use App\Http\Controllers\Admin\MahasiswaController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
@@ -31,7 +32,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('mata-kuliah', MataKuliahController::class)->except('show');
 });
 
-
+Route::middleware(['auth', 'role:mahasiswa'])->prefix('mahasiswa')->name('mahasiswa.')->group(function () {
+    Route::get('/krs', [KrsController::class, 'index'])->name('krs.index');
+    Route::post('/krs', [KrsController::class, 'store'])->name('krs.store');
+    Route::delete('/krs/{krs}', [KrsController::class, 'destroy'])->name('krs.destroy');
+});
 
 Route::middleware(['auth', 'role:admin'])->get('/admin', fn () => view('dashboard.admin'))->name('admin.home');
 Route::middleware(['auth', 'role:dosen'])->get('/dosen', fn () => view('dashboard.dosen'))->name('dosen.home');
