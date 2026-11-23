@@ -12,6 +12,11 @@ class MataKuliah extends Model
         'sks',
         'semester',
         'dosen_id',
+        'hari', 
+        'jam_mulai', 
+        'jam_selesai', 
+        'ruang', 
+        'kuota',
     ];
 
     public function dosen()

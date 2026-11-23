@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Krs;
 use App\Models\MataKuliah;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KrsController extends Controller
 {
@@ -27,19 +28,35 @@ class KrsController extends Controller
             ->get();
     }
 
+    private function bentrok(MataKuliah $a, MataKuliah $b): bool
+    {
+        if (! $a->hari || ! $b->hari || $a->hari !== $b->hari) {
+            return false;
+        }
+        if (! $a->jam_mulai || ! $a->jam_selesai || ! $b->jam_mulai || ! $b->jam_selesai) {
+            return false;
+        }
+        return $a->jam_mulai < $b->jam_selesai && $b->jam_mulai < $a->jam_selesai;
+    }
+
     public function index()
     {
         $mhs = $this->mahasiswa();
         $krs = $this->krsSaya($mhs->id);
 
         $tersedia = MataKuliah::whereNotIn('id', $krs->pluck('mata_kuliah_id'))
-            ->orderBy('kode_mk')
-            ->get();
+            ->orderBy('kode_mk')->get();
+
+        $terisi = Krs::where('semester', self::SEMESTER)
+            ->selectRaw('mata_kuliah_id, count(*) as total')
+            ->groupBy('mata_kuliah_id')
+            ->pluck('total', 'mata_kuliah_id');
 
         return view('mahasiswa.krs.index', [
             'mhs'      => $mhs,
             'krs'      => $krs,
             'tersedia' => $tersedia,
+            'terisi'   => $terisi,
             'totalSks' => $krs->sum(fn ($k) => $k->mataKuliah->sks),
             'maksSks'  => self::MAKS_SKS,
             'semester' => self::SEMESTER,
@@ -53,27 +70,46 @@ class KrsController extends Controller
             'mata_kuliah_id' => ['required', 'exists:mata_kuliahs,id'],
         ]);
 
-        $krs = $this->krsSaya($mhs->id);
+        // Transaksi + kunci baris: kuota tidak terlampaui walau dua mahasiswa memilih bersamaan (NFR-07)
+        $galat = DB::transaction(function () use ($mhs, $data) {
+            $mk  = MataKuliah::lockForUpdate()->findOrFail($data['mata_kuliah_id']);
+            $krs = $this->krsSaya($mhs->id);
 
-        if ($krs->contains('mata_kuliah_id', (int) $data['mata_kuliah_id'])) {
-            return back()->withErrors(['mata_kuliah_id' => 'Mata kuliah ini sudah diambil.']);
-        }
+            if ($krs->contains('mata_kuliah_id', $mk->id)) {
+                return 'Mata kuliah ini sudah diambil.';
+            }
 
-        $mk = MataKuliah::findOrFail($data['mata_kuliah_id']);
-        $totalSks = $krs->sum(fn ($k) => $k->mataKuliah->sks);
+            $totalSks = $krs->sum(fn ($k) => $k->mataKuliah->sks);
+            if ($totalSks + $mk->sks > self::MAKS_SKS) {
+                return 'Total SKS melebihi batas ' . self::MAKS_SKS . '.';
+            }
 
-        if ($totalSks + $mk->sks > self::MAKS_SKS) {
-            return back()->withErrors([
-                'mata_kuliah_id' => 'Total SKS melebihi batas ' . self::MAKS_SKS . '.',
+            foreach ($krs as $k) {
+                if ($this->bentrok($k->mataKuliah, $mk)) {
+                    return 'Jadwal bentrok dengan ' . $k->mataKuliah->nama_mk
+                        . ' (' . $k->mataKuliah->hari . ' '
+                        . substr($k->mataKuliah->jam_mulai, 0, 5) . '-'
+                        . substr($k->mataKuliah->jam_selesai, 0, 5) . ').';
+                }
+            }
+
+            $terisi = Krs::where('mata_kuliah_id', $mk->id)
+                ->where('semester', self::SEMESTER)->count();
+            if ($mk->kuota && $terisi >= $mk->kuota) {
+                return 'Kuota kelas penuh.';
+            }
+
+            Krs::create([
+                'mahasiswa_id'   => $mhs->id,
+                'mata_kuliah_id' => $mk->id,
+                'semester'       => self::SEMESTER,
             ]);
+            return null;
+        });
+
+        if ($galat) {
+            return back()->withErrors(['mata_kuliah_id' => $galat]);
         }
-
-        Krs::create([
-            'mahasiswa_id'   => $mhs->id,
-            'mata_kuliah_id' => $mk->id,
-            'semester'       => self::SEMESTER,
-        ]);
-
         return back()->with('success', 'Mata kuliah ditambahkan ke KRS.');
     }
 

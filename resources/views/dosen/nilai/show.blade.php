@@ -1,6 +1,9 @@
 <h1>Nilai: {{ $mataKuliah->kode_mk }} - {{ $mataKuliah->nama_mk }}</h1>
 <p>Semester {{ $semester }} | {{ $mataKuliah->sks }} SKS</p>
 <a href="{{ route('dosen.nilai.index') }}">&larr; Kembali</a>
+@unless ($dibuka)
+    <p style="color:red">Masa penginputan nilai ditutup. Hubungi admin untuk membukanya.</p>
+@endunless
 
 @if (session('success')) <p>{{ session('success') }}</p> @endif
 @if ($errors->any())
@@ -21,7 +24,8 @@
                 <td>
                     <input type="number" step="0.01" min="0" max="100"
                            name="nilai[{{ $k->mahasiswa_id }}]"
-                           value="{{ old('nilai.'.$k->mahasiswa_id, $n->nilai_angka ?? '') }}">
+                           value="{{ old('nilai.'.$k->mahasiswa_id, $n->nilai_angka ?? '') }}"
+                           @disabled(! $dibuka)>
                 </td>
                 <td>{{ $n->nilai_huruf ?? '-' }}</td>
             </tr>
@@ -29,7 +33,7 @@
             <tr><td colspan="4">Belum ada mahasiswa yang mengambil mata kuliah ini.</td></tr>
         @endforelse
     </table>
-    @if ($peserta->count())
+    @if ($peserta->count() && $dibuka)
         <button type="submit">Simpan nilai</button>
     @endif
 </form>

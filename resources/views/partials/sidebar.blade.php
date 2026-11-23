@@ -2,23 +2,24 @@
     // [label, url, pola rute aktif, sudah tersedia?]
     // Ubah false menjadi true saat modul sudah jadi. Ganti url demo dengan rute asli setelah modul backend selesai.
     $menus = [
-        'admin' => [
+    'admin' => [
             ['Beranda', '/admin', 'admin', true],
             ['Data mahasiswa', '/admin/mahasiswa', 'admin/mahasiswa*', true],
-            ['Data dosen', '/demo/dosen', 'demo/dosen*', false],
-            ['Mata kuliah', '/admin/mata-kuliah', 'admin/mata-kuliah*', true],
-            ['Kelas', '/demo/kelas', 'demo/kelas*', false],
-            ['Persetujuan KRS', '/admin/krs', 'admin/krs*', false],
+            ['Data dosen', '/admin/dosen', 'admin/dosen*', true],
+            ['Mata kuliah dan kelas', '/admin/mata-kuliah', 'admin/mata-kuliah*', true],
+            ['Masa input nilai', '/admin/masa-nilai', 'admin/masa-nilai*', true],
+            ['Ubah kata sandi', '/akun/password', 'akun/password*', true],
         ],
         'dosen' => [
             ['Beranda', '/dosen', 'dosen', true],
             ['Input nilai', '/dosen/nilai', 'dosen/nilai*', true],
+            ['Ubah kata sandi', '/akun/password', 'akun/password*', true],
         ],
         'mahasiswa' => [
             ['Beranda', '/mahasiswa', 'mahasiswa', true],
             ['KRS', '/mahasiswa/krs', 'mahasiswa/krs*', true],
             ['Nilai', '/mahasiswa/nilai', 'mahasiswa/nilai*', true],
-            ['Jadwal kuliah', '/mahasiswa/jadwal', 'mahasiswa/jadwal*', false],
+            ['Ubah kata sandi', '/akun/password', 'akun/password*', true],
         ],
     ];
     $items = $menus[auth()->user()->role] ?? [];
