@@ -12,7 +12,7 @@
         ],
         'dosen' => [
             ['Beranda', '/dosen', 'dosen', true],
-            ['Input nilai', '/dosen/nilai', 'dosen/nilai*', false],
+            ['Input nilai', '/dosen/nilai', 'dosen/nilai*', true],
         ],
         'mahasiswa' => [
             ['Beranda', '/mahasiswa', 'mahasiswa', true],

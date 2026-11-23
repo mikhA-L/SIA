@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dosen\NilaiController as DosenNilaiController;
 use App\Http\Controllers\Mahasiswa\NilaiController;
 use App\Http\Controllers\Mahasiswa\KrsController;
 use App\Http\Controllers\Admin\MahasiswaController;
@@ -31,6 +32,12 @@ Route::post('/logout', [LoginController::class, 'logout'])
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('mahasiswa', MahasiswaController::class)->except('show');
     Route::resource('mata-kuliah', MataKuliahController::class)->except('show');
+});
+
+Route::middleware(['auth', 'role:dosen'])->prefix('dosen')->name('dosen.')->group(function () {
+    Route::get('/nilai', [DosenNilaiController::class, 'index'])->name('nilai.index');
+    Route::get('/nilai/{mataKuliah}', [DosenNilaiController::class, 'show'])->name('nilai.show');
+    Route::post('/nilai/{mataKuliah}', [DosenNilaiController::class, 'store'])->name('nilai.store');
 });
 
 Route::middleware(['auth', 'role:mahasiswa'])->prefix('mahasiswa')->name('mahasiswa.')->group(function () {
