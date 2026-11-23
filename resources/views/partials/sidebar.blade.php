@@ -17,7 +17,7 @@
         'mahasiswa' => [
             ['Beranda', '/mahasiswa', 'mahasiswa', true],
             ['KRS', '/mahasiswa/krs', 'mahasiswa/krs*', true],
-            ['Nilai', '/mahasiswa/nilai', 'mahasiswa/nilai*', false],
+            ['Nilai', '/mahasiswa/nilai', 'mahasiswa/nilai*', true],
             ['Jadwal kuliah', '/mahasiswa/jadwal', 'mahasiswa/jadwal*', false],
         ],
     ];

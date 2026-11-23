@@ -55,4 +55,9 @@ class User extends Authenticatable
         return $this->hasOne(Mahasiswa::class);
         return $this->hasOne(\App\Models\Mahasiswa::class);
     }
+    
+    public function dosen()
+    {
+    return $this->hasOne(\App\Models\Dosen::class);
+    }
 }

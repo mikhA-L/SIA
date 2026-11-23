@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Mahasiswa\NilaiController;
 use App\Http\Controllers\Mahasiswa\KrsController;
 use App\Http\Controllers\Admin\MahasiswaController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -36,6 +37,7 @@ Route::middleware(['auth', 'role:mahasiswa'])->prefix('mahasiswa')->name('mahasi
     Route::get('/krs', [KrsController::class, 'index'])->name('krs.index');
     Route::post('/krs', [KrsController::class, 'store'])->name('krs.store');
     Route::delete('/krs/{krs}', [KrsController::class, 'destroy'])->name('krs.destroy');
+    Route::get('/nilai', [NilaiController::class, 'index'])->name('nilai.index');
 });
 
 Route::middleware(['auth', 'role:admin'])->get('/admin', fn () => view('dashboard.admin'))->name('admin.home');
