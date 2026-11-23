@@ -11,5 +11,12 @@ class MataKuliah extends Model
         'nama_mk',
         'sks',
         'semester',
+        'dosen_id',
     ];
+
+    public function dosen()
+    {
+    return $this->belongsTo(Dosen::class);
+    }
+
 }
