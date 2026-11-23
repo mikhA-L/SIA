@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\DosenController;
+use App\Http\Controllers\Admin\MasaNilaiController;
+use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Dosen\NilaiController as DosenNilaiController;
 use App\Http\Controllers\Mahasiswa\NilaiController;
 use App\Http\Controllers\Mahasiswa\KrsController;
@@ -7,6 +10,7 @@ use App\Http\Controllers\Admin\MahasiswaController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MataKuliahController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +36,9 @@ Route::post('/logout', [LoginController::class, 'logout'])
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('mahasiswa', MahasiswaController::class)->except('show');
     Route::resource('mata-kuliah', MataKuliahController::class)->except('show');
+    Route::resource('dosen', DosenController::class)->except('show');
+    Route::get('masa-nilai', [MasaNilaiController::class, 'index'])->name('masa-nilai.index');
+    Route::put('masa-nilai', [MasaNilaiController::class, 'update'])->name('masa-nilai.update');
 });
 
 Route::middleware(['auth', 'role:dosen'])->prefix('dosen')->name('dosen.')->group(function () {
@@ -45,6 +52,11 @@ Route::middleware(['auth', 'role:mahasiswa'])->prefix('mahasiswa')->name('mahasi
     Route::post('/krs', [KrsController::class, 'store'])->name('krs.store');
     Route::delete('/krs/{krs}', [KrsController::class, 'destroy'])->name('krs.destroy');
     Route::get('/nilai', [NilaiController::class, 'index'])->name('nilai.index');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/akun/password', [PasswordController::class, 'edit'])->name('akun.password.edit');
+    Route::put('/akun/password', [PasswordController::class, 'update'])->name('akun.password.update');
 });
 
 Route::middleware(['auth', 'role:admin'])->get('/admin', fn () => view('dashboard.admin'))->name('admin.home');

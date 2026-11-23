@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dosen;
 
+use App\Models\Pengaturan;
 use App\Http\Controllers\Controller;
 use App\Models\Krs;
 use App\Models\MataKuliah;
@@ -66,12 +67,17 @@ class NilaiController extends Controller
             'peserta'    => $peserta,
             'nilai'      => $nilai,
             'semester'   => self::SEMESTER,
+            'dibuka' => Pengaturan::nilaiDibuka(),
         ]);
     }
 
     public function store(Request $request, MataKuliah $mataKuliah)
     {
         $this->milikDosen($mataKuliah);
+
+        if (! Pengaturan::nilaiDibuka()) {
+        return back()->withErrors(['nilai' => 'Masa penginputan nilai telah berakhir.']);
+        }
 
         $request->validate([
             'nilai'   => ['required', 'array'],

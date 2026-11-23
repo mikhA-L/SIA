@@ -25,6 +25,12 @@ class MataKuliahController extends Controller
             'nama_mk' => 'required|string|max:255',
             'sks' => 'required|integer|min:1|max:6',
             'semester' => 'required|integer|min:1|max:8',
+            'hari'        => ['nullable', 'in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu'],
+            'jam_mulai'   => ['nullable', 'date_format:H:i'],
+            'jam_selesai' => ['nullable', 'date_format:H:i', 'after:jam_mulai'],
+            'ruang'       => ['nullable', 'string', 'max:30'],
+            'kuota'       => ['required', 'integer', 'min:1', 'max:500'],
+            'dosen_id'    => ['nullable', 'exists:dosen,id'],
         ]);
 
         MataKuliah::create($validated);
@@ -44,6 +50,12 @@ class MataKuliahController extends Controller
             'nama_mk' => 'required|string|max:255',
             'sks' => 'required|integer|min:1|max:6',
             'semester' => 'required|integer|min:1|max:8',
+            'hari'        => ['nullable', 'in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu'],
+            'jam_mulai'   => ['nullable', 'date_format:H:i'],
+            'jam_selesai' => ['nullable', 'date_format:H:i', 'after:jam_mulai'],
+            'ruang'       => ['nullable', 'string', 'max:30'],
+            'kuota'       => ['required', 'integer', 'min:1', 'max:500'],
+            'dosen_id'    => ['nullable', 'exists:dosen,id'],
         ]);
 
         $mataKuliah->update($validated);

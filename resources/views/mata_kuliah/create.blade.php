@@ -45,6 +45,36 @@
                                 <input type="number" name="semester" class="form-control" value="{{ old('semester') }}" min="1" max="8" placeholder="1 - 8" required>
                             </div>
                         </div>
+                    
+                        @php $x = $mata_kuliah ?? $mataKuliah ?? null; @endphp
+                        <div><label>Hari</label>
+                            <select name="hari">
+                                <option value="">-</option>
+                                @foreach (['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'] as $h)
+                                    <option value="{{ $h }}" @selected(old('hari', optional($x)->hari) === $h)>{{ $h }}</option>
+                                @endforeach
+                            </select>
+                            @error('hari') <p>{{ $message }}</p> @enderror</div>
+                        <div><label>Jam mulai</label>
+                            <input type="time" name="jam_mulai" value="{{ old('jam_mulai', optional($x)->jam_mulai ? substr($x->jam_mulai, 0, 5) : '') }}">
+                            @error('jam_mulai') <p>{{ $message }}</p> @enderror</div>
+                        <div><label>Jam selesai</label>
+                            <input type="time" name="jam_selesai" value="{{ old('jam_selesai', optional($x)->jam_selesai ? substr($x->jam_selesai, 0, 5) : '') }}">
+                            @error('jam_selesai') <p>{{ $message }}</p> @enderror</div>
+                        <div><label>Ruang</label>
+                            <input name="ruang" value="{{ old('ruang', optional($x)->ruang) }}">
+                            @error('ruang') <p>{{ $message }}</p> @enderror</div>
+                        <div><label>Kuota</label>
+                            <input type="number" name="kuota" min="1" value="{{ old('kuota', optional($x)->kuota ?? 40) }}" required>
+                            @error('kuota') <p>{{ $message }}</p> @enderror</div>
+                        <div><label>Dosen pengampu</label>
+                            <select name="dosen_id">
+                                <option value="">- Belum ditentukan -</option>
+                                @foreach (\App\Models\Dosen::orderBy('nama')->get() as $d)
+                                    <option value="{{ $d->id }}" @selected(old('dosen_id', optional($x)->dosen_id) == $d->id)>{{ $d->nama }}</option>
+                                @endforeach
+                            </select>
+                            @error('dosen_id') <p>{{ $message }}</p> @enderror</div>
                         <div class="d-flex justify-content-between">
                             <a href="{{ route('admin.mata-kuliah.index') }}" class="btn btn-secondary">Kembali</a>
                             <button type="submit" class="btn btn-primary">Simpan Data</button>
