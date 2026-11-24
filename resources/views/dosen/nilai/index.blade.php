@@ -1,3 +1,9 @@
+@extends('layouts.app')
+
+@section('title', 'Input Nilai')
+
+@section('content')
+<div class="halaman halaman-tabel">
 <h1>Input Nilai</h1>
 <p>Semester {{ $semester }}</p>
 
@@ -15,3 +21,5 @@
         <tr><td colspan="5">Belum ada mata kuliah yang Anda ampu.</td></tr>
     @endforelse
 </table>
+</div>
+@endsection

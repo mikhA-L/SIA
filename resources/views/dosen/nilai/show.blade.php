@@ -1,3 +1,9 @@
+@extends('layouts.app')
+
+@section('title', 'Halaman')
+
+@section('content')
+<div class="halaman halaman-tabel">
 <h1>Nilai: {{ $mataKuliah->kode_mk }} - {{ $mataKuliah->nama_mk }}</h1>
 <p>Semester {{ $semester }} | {{ $mataKuliah->sks }} SKS</p>
 <a href="{{ route('dosen.nilai.index') }}">&larr; Kembali</a>
@@ -37,3 +43,5 @@
         <button type="submit">Simpan nilai</button>
     @endif
 </form>
+</div>
+@endsection

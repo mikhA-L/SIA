@@ -1,4 +1,22 @@
 @php
+    // Memilih ikon berdasarkan kata pada nama menu.
+    $ikonDari = function (string $t): string {
+        $t = strtolower($t);
+
+        return match (true) {
+            str_contains($t, 'beranda') => 'bi-speedometer2',
+            str_contains($t, 'mahasiswa') => 'bi-mortarboard',
+            str_contains($t, 'dosen') => 'bi-person-badge',
+            str_contains($t, 'mata kuliah'), str_contains($t, 'kelas') => 'bi-book',
+            str_contains($t, 'krs') => 'bi-journal-check',
+            str_contains($t, 'nilai') => 'bi-award',
+            str_contains($t, 'jadwal') => 'bi-calendar-week',
+            str_contains($t, 'sandi'), str_contains($t, 'password') => 'bi-key',
+            default => 'bi-circle',
+        };
+    };
+@endphp
+@php
     // [label, url, pola rute aktif, sudah tersedia?]
     // Ubah false menjadi true saat modul sudah jadi. Ganti url demo dengan rute asli setelah modul backend selesai.
     $menus = [
@@ -31,7 +49,7 @@
             <li>
                 @if ($siap)
                     <a href="{{ url($url) }}" class="nav-link {{ request()->is($pola) ? 'active' : '' }}"
-                       @if (request()->is($pola)) aria-current="page" @endif>{{ $label }}</a>
+                       @if (request()->is($pola)) aria-current="page" @endif><i class="bi {{ $ikonDari($label) }}" aria-hidden="true"></i><span>{{ $label }}</span></a>
                 @else
                     <span class="nav-link disabled" aria-disabled="true">{{ $label }} <small>Segera</small></span>
                 @endif
