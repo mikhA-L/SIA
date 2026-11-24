@@ -3,23 +3,28 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Akun uji. Ganti kata sandi sebelum aplikasi dipasang online.
+        $akun = [
+            ['name' => 'Admin Prodi',      'username' => 'admin',      'email' => 'admin@sia.test',      'role' => 'admin'],
+            ['name' => 'Dosen Contoh',     'username' => '198001012005', 'email' => 'dosen@sia.test',    'role' => 'dosen'],
+            ['name' => 'Mahasiswa Contoh', 'username' => '3233111001', 'email' => 'mahasiswa@sia.test', 'role' => 'mahasiswa'],
+        ];
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        foreach ($akun as $data) {
+            User::updateOrCreate(
+                ['username' => $data['username']],
+                $data + ['password' => Hash::make('password123')]
+            );
+        }
+        
+        $this->call(AkunContohSeeder::class);
+        $this->call(DosenSeeder::class);
     }
 }
