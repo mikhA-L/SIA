@@ -1,3 +1,9 @@
+@extends('layouts.app')
+
+@section('title', 'Halaman')
+
+@section('content')
+<div class="halaman halaman-tabel">
 <h1>KRS {{ $pengajuan->mahasiswa->nama }}</h1>
 <p>{{ $pengajuan->mahasiswa->nim }} | {{ $pengajuan->semester }} | Status: <strong>{{ $pengajuan->status }}</strong></p>
 <a href="{{ route('admin.krs.index') }}">&larr; Kembali</a>
@@ -29,3 +35,5 @@
         <button name="aksi" value="tolak">Tolak</button>
     </form>
 @endif
+</div>
+@endsection
