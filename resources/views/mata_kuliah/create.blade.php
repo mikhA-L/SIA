@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Mata Kuliah - SIA</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
+@extends('layouts.app')
+
+@section('title', 'Tambah Mata Kuliah')
+
+@section('content')
+<div class="halaman halaman-kartu">
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -85,5 +82,5 @@
         </div>
     </div>
 </div>
-</body>
-</html>
+</div>
+@endsection
