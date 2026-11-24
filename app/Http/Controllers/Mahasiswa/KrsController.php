@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Mahasiswa;
 
+use App\Models\KrsPengajuan;
 use App\Http\Controllers\Controller;
 use App\Models\Krs;
 use App\Models\MataKuliah;
@@ -26,6 +27,19 @@ class KrsController extends Controller
             ->where('mahasiswa_id', $mhsId)
             ->where('semester', self::SEMESTER)
             ->get();
+    }
+
+    private function pengajuan($mhsId): KrsPengajuan
+    {
+        return KrsPengajuan::firstOrCreate(
+            ['mahasiswa_id' => $mhsId, 'semester' => self::SEMESTER],
+            ['status' => 'draf']
+        );
+    }
+
+    private function terkunci($mhsId): bool
+    {
+        return in_array($this->pengajuan($mhsId)->status, ['diajukan', 'disetujui'], true);
     }
 
     private function bentrok(MataKuliah $a, MataKuliah $b): bool
@@ -60,6 +74,7 @@ class KrsController extends Controller
             'totalSks' => $krs->sum(fn ($k) => $k->mataKuliah->sks),
             'maksSks'  => self::MAKS_SKS,
             'semester' => self::SEMESTER,
+            'pengajuan' => $this->pengajuan($mhs->id),
         ]);
     }
 
@@ -69,6 +84,10 @@ class KrsController extends Controller
         $data = $request->validate([
             'mata_kuliah_id' => ['required', 'exists:mata_kuliahs,id'],
         ]);
+
+        if ($this->terkunci($mhs->id)) {
+            return back()->withErrors(['mata_kuliah_id' => 'KRS sudah diajukan dan tidak dapat diubah.']);
+        }
 
         // Transaksi + kunci baris: kuota tidak terlampaui walau dua mahasiswa memilih bersamaan (NFR-07)
         $galat = DB::transaction(function () use ($mhs, $data) {
@@ -115,9 +134,30 @@ class KrsController extends Controller
 
     public function destroy(Krs $krs)
     {
-        abort_unless($krs->mahasiswa_id === $this->mahasiswa()->id, 403);
-        $krs->delete();
+        $mhs = $this->mahasiswa();
+        abort_unless($krs->mahasiswa_id === $mhs->id, 403);
 
+        if ($this->terkunci($mhs->id)) {
+            return back()->withErrors(['mata_kuliah_id' => 'KRS sudah diajukan dan tidak dapat diubah.']);
+        }
+
+        $krs->delete();
         return back()->with('success', 'Mata kuliah dihapus dari KRS.');
+    }
+
+    public function ajukan()
+    {
+        $mhs = $this->mahasiswa();
+        $p = $this->pengajuan($mhs->id);
+
+        if (! in_array($p->status, ['draf', 'ditolak'], true)) {
+            return back()->withErrors(['mata_kuliah_id' => 'KRS sudah diajukan.']);
+        }
+        if ($this->krsSaya($mhs->id)->isEmpty()) {
+            return back()->withErrors(['mata_kuliah_id' => 'KRS masih kosong.']);
+        }
+
+        $p->update(['status' => 'diajukan', 'catatan' => null]);
+        return back()->with('success', 'KRS diajukan untuk persetujuan admin.');
     }
 }
