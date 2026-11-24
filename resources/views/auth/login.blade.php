@@ -101,11 +101,6 @@
             <h1>SIA PTIK</h1>
             <p class="sub">Sistem Informasi Akademik Program Studi PTIK, Universitas Negeri Medan.</p>
         </div>
-        <ul class="peran">
-            <li><strong>Mahasiswa</strong> menyusun KRS dan melihat nilai.</li>
-            <li><strong>Dosen</strong> mengisi nilai kelas yang diampu.</li>
-            <li><strong>Admin prodi</strong> mengelola data dan menyetujui KRS.</li>
-        </ul>
     </section>
 
     <main class="panel">

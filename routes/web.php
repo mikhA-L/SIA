@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Mahasiswa\BerandaController;
 use App\Http\Controllers\Admin\KrsController as AdminKrsController;
 use App\Http\Controllers\Admin\DosenController;
 use App\Http\Controllers\Admin\MasaNilaiController;
@@ -66,4 +67,4 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'role:admin'])->get('/admin', fn () => view('dashboard.admin'))->name('admin.home');
 Route::middleware(['auth', 'role:dosen'])->get('/dosen', fn () => view('dashboard.dosen'))->name('dosen.home');
-Route::middleware(['auth', 'role:mahasiswa'])->get('/mahasiswa', fn () => view('dashboard.mahasiswa'))->name('mahasiswa.home');
+Route::middleware(['auth', 'role:mahasiswa'])->get('/mahasiswa', BerandaController::class)->name('mahasiswa.home');

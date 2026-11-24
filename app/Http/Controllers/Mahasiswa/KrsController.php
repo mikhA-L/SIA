@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class KrsController extends Controller
 {
-    private const SEMESTER = '2026/2027 Ganjil';
+    public const SEMESTER = '2026/2027 Ganjil';
     private const MAKS_SKS = 24;
 
     private function mahasiswa()
