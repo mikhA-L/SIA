@@ -1,3 +1,9 @@
+@extends('layouts.app')
+
+@section('title', 'Masa Input Nilai')
+
+@section('content')
+<div class="halaman halaman-kartu">
 <h1>Masa Input Nilai</h1>
 @if (session('success')) <p>{{ session('success') }}</p> @endif
 
@@ -9,3 +15,5 @@
     <button>{{ $dibuka ? 'Tutup masa input nilai' : 'Buka masa input nilai' }}</button>
 </form>
 <p>Saat ditutup, dosen tidak dapat memasukkan atau mengubah nilai.</p>
+</div>
+@endsection

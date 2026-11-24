@@ -1,3 +1,9 @@
+@extends('layouts.app')
+
+@section('title', 'Nilai dan Transkrip')
+
+@section('content')
+<div class="halaman halaman-tabel">
 <h1>Nilai dan Transkrip</h1>
 <p>{{ $mhs->nim }} - {{ $mhs->nama }}</p>
 <p><strong>IPK: {{ number_format($ipk, 2) }}</strong></p>
@@ -19,3 +25,5 @@
 @empty
     <p>Belum ada nilai.</p>
 @endforelse
+</div>
+@endsection

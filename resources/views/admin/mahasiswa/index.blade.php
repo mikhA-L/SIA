@@ -1,3 +1,9 @@
+@extends('layouts.app')
+
+@section('title', 'Data Mahasiswa')
+
+@section('content')
+<div class="halaman halaman-tabel">
 <h1>Data Mahasiswa</h1>
 @if (session('success')) <p>{{ session('success') }}</p> @endif
 
@@ -28,3 +34,5 @@
     @endforelse
 </table>
 {{ $data->links() }}
+</div>
+@endsection

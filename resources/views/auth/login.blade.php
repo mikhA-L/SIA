@@ -6,7 +6,7 @@
     <title>Masuk | SIA PTIK UNIMED</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@500;600&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
@@ -20,7 +20,7 @@
         html, body { height: 100%; }
         body {
             margin: 0;
-            font-family: "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            font-family: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
             color: var(--ink);
             background: #fff;
         }
@@ -38,7 +38,7 @@
         }
         @media (min-width: 900px) { .brand { width: 42%; padding: 3.5rem 3.5rem; } }
         .brand h1 {
-            font-family: "Newsreader", Georgia, "Times New Roman", serif;
+            font-family: "Poppins", system-ui, sans-serif;
             font-weight: 600;
             font-size: 2.25rem;
             line-height: 1.1;

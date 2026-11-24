@@ -1,3 +1,9 @@
+@extends('layouts.app')
+
+@section('title', 'Ubah Kata Sandi')
+
+@section('content')
+<div class="halaman halaman-kartu">
 <h1>Ubah Kata Sandi</h1>
 @if (session('success')) <p>{{ session('success') }}</p> @endif
 
@@ -13,3 +19,5 @@
         <input type="password" name="password_confirmation" required></div>
     <button type="submit">Simpan</button>
 </form>
+</div>
+@endsection
