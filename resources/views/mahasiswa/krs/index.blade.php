@@ -1,3 +1,9 @@
+@extends('layouts.app')
+
+@section('title', 'Halaman')
+
+@section('content')
+<div class="halaman halaman-tabel">
 <h1>KRS {{ $semester }}</h1>
 <p>{{ $mhs->nim }} - {{ $mhs->nama }} (angkatan {{ $mhs->angkatan }})</p>
 <p>Total SKS: {{ $totalSks }} / {{ $maksSks }}</p>
@@ -53,3 +59,5 @@
         <tr><td colspan="7">Tidak ada mata kuliah lain.</td></tr>
     @endforelse
 </table>
+</div>
+@endsection
