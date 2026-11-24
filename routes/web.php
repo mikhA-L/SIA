@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\KrsController as AdminKrsController;
 use App\Http\Controllers\Admin\DosenController;
 use App\Http\Controllers\Admin\MasaNilaiController;
 use App\Http\Controllers\Auth\PasswordController;
@@ -39,6 +40,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('dosen', DosenController::class)->except('show');
     Route::get('masa-nilai', [MasaNilaiController::class, 'index'])->name('masa-nilai.index');
     Route::put('masa-nilai', [MasaNilaiController::class, 'update'])->name('masa-nilai.update');
+    Route::get('krs', [AdminKrsController::class, 'index'])->name('krs.index');
+    Route::get('krs/{pengajuan}', [AdminKrsController::class, 'show'])->name('krs.show');
+    Route::put('krs/{pengajuan}', [AdminKrsController::class, 'update'])->name('krs.update');
 });
 
 Route::middleware(['auth', 'role:dosen'])->prefix('dosen')->name('dosen.')->group(function () {
@@ -52,6 +56,7 @@ Route::middleware(['auth', 'role:mahasiswa'])->prefix('mahasiswa')->name('mahasi
     Route::post('/krs', [KrsController::class, 'store'])->name('krs.store');
     Route::delete('/krs/{krs}', [KrsController::class, 'destroy'])->name('krs.destroy');
     Route::get('/nilai', [NilaiController::class, 'index'])->name('nilai.index');
+    Route::post('/krs/ajukan', [KrsController::class, 'ajukan'])->name('krs.ajukan');
 });
 
 Route::middleware('auth')->group(function () {

@@ -8,6 +8,19 @@
 <p>{{ $mhs->nim }} - {{ $mhs->nama }} (angkatan {{ $mhs->angkatan }})</p>
 <p>Total SKS: {{ $totalSks }} / {{ $maksSks }}</p>
 
+
+@php $kunci = in_array($pengajuan->status, ['diajukan', 'disetujui']); @endphp
+<p>Status KRS: <strong>{{ strtoupper($pengajuan->status) }}</strong></p>
+@if ($pengajuan->status === 'ditolak' && $pengajuan->catatan)
+    <p style="color:red">Catatan admin: {{ $pengajuan->catatan }}</p>
+@endif
+@if (in_array($pengajuan->status, ['draf', 'ditolak']) && $krs->count())
+    <form method="POST" action="{{ route('mahasiswa.krs.ajukan') }}">
+        @csrf
+        <button>Ajukan KRS</button>
+    </form>
+@endif
+
 @if (session('success')) <p>{{ session('success') }}</p> @endif
 @error('mata_kuliah_id') <p style="color:red">{{ $message }}</p> @enderror
 
@@ -26,7 +39,7 @@
                 <form method="POST" action="{{ route('mahasiswa.krs.destroy', $k) }}"
                       onsubmit="return confirm('Hapus dari KRS?')">
                     @csrf @method('DELETE')
-                    <button>Hapus</button>
+                    <button @disabled($kunci)>Hapus</button>
                 </form>
             </td>
         </tr>
@@ -51,7 +64,7 @@
                 <form method="POST" action="{{ route('mahasiswa.krs.store') }}">
                     @csrf
                     <input type="hidden" name="mata_kuliah_id" value="{{ $mk->id }}">
-                    <button @disabled($sisa <= 0)>Ambil</button>
+                    <button @disabled($sisa <= 0 || $kunci)>Ambil</button>
                 </form>
             </td>
         </tr>

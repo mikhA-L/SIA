@@ -27,6 +27,7 @@
             ['Mata kuliah dan kelas', '/admin/mata-kuliah', 'admin/mata-kuliah*', true],
             ['Masa input nilai', '/admin/masa-nilai', 'admin/masa-nilai*', true],
             ['Ubah kata sandi', '/akun/password', 'akun/password*', true],
+            ['Persetujuan KRS', '/admin/krs', 'admin/krs*', true],
         ],
         'dosen' => [
             ['Beranda', '/dosen', 'dosen', true],
