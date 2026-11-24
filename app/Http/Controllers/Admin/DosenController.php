@@ -58,17 +58,19 @@ class DosenController extends Controller
 
     public function edit(Dosen $dosen)
     {
-        $data = $this->validated($request, $dosen->id);
-        $dosen->update($data);
-        $dosen->user?->update(['name' => $data['nama']]);
-
-        return redirect()->route('admin.dosen.index')->with('success', 'Data diperbarui.');
+        return view('admin.dosen.edit', compact('dosen'));
     }
 
 
     public function update(Request $request, Dosen $dosen)
     {
-        $dosen->update($this->validated($request, $dosen->id));
+        $data = $this->validated($request, $dosen->id);
+
+        DB::transaction(function () use ($dosen, $data) {
+            $dosen->update($data);
+            $dosen->user?->update(['name' => $data['nama']]);
+        });
+
         return redirect()->route('admin.dosen.index')->with('success', 'Data diperbarui.');
     }
 
