@@ -169,3 +169,28 @@ a.kartu:hover { transform: translateY(-3px); border-color: #c9d6ee; box-shadow: 
 .auth-card a { color: var(--blue-d); font-weight: 600; }
 .auth-card .text-danger, .auth-card .error, .auth-card .invalid-feedback { color: var(--red); font-size: .86rem; }
 .auth-card ul { padding-left: 1.2rem; color: var(--red); font-size: .9rem; }
+
+
+/* ---------- Tambahan desain KRS dan halaman persetujuan ---------- */
+.tabs { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem; margin: 0 0 1.2rem; }
+.tabs-label { color: var(--muted); font-family: "Poppins", sans-serif; font-size: .74rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin-right: .3rem; }
+.tab { padding: .42rem 1.05rem; border-radius: 999px; border: 1px solid var(--line); background: #fff; color: var(--muted); text-decoration: none; font-family: "Poppins", sans-serif; font-size: .84rem; font-weight: 500; transition: background .15s; }
+a.tab:hover { background: var(--blue-l); color: var(--blue-d); border-color: #c9d6ee; }
+.tab.active { background: linear-gradient(135deg, var(--blue), var(--blue-d)); border-color: transparent; color: #fff; box-shadow: 0 3px 8px rgba(47, 95, 208, .28); }
+
+.kosong { display: flex; flex-direction: column; align-items: center; text-align: center; gap: .45rem; background: #fff; border: 1px dashed #c3d1ea; border-radius: 18px; padding: 3.2rem 1.5rem; color: var(--muted); }
+.kosong i { font-size: 2.8rem; color: #9fb4dd; line-height: 1; }
+.kosong strong { font-family: "Poppins", sans-serif; color: var(--navy); font-size: 1.05rem; font-weight: 600; }
+.kosong span { max-width: 30rem; font-size: .9rem; }
+
+.btn-ok, .halaman button.btn-ok, .halaman td button.btn-ok { background: linear-gradient(135deg, #22b573, #168653) !important; color: #fff !important; border: 0 !important; box-shadow: 0 3px 8px rgba(31, 157, 99, .3) !important; }
+
+.ringkasan { display: inline-block; background: var(--blue-l); color: var(--blue-d) !important; border-radius: 999px; padding: .35rem 1rem; font-size: .88rem; font-weight: 600; margin: 0 .5rem .6rem 0 !important; }
+.ringkasan strong { color: inherit; }
+
+.sel-kode { font-family: ui-monospace, SFMono-Regular, Consolas, "Courier New", monospace; font-size: .88rem; color: var(--navy-2); font-weight: 600; }
+
+/* tabel detail (label di kiri, isi di kanan) */
+.halaman tbody th { text-transform: none; letter-spacing: 0; font-size: .9rem; color: var(--text); background: #f4f7fc; width: 28%; border-bottom: 1px solid var(--line); }
+.halaman input[type=checkbox], .halaman input[type=radio] { accent-color: var(--blue); width: 1.05rem; height: 1.05rem; vertical-align: middle; }
+.halaman textarea { min-height: 96px; resize: vertical; }

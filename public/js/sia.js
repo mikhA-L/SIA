@@ -26,6 +26,7 @@
     document.querySelectorAll('.content button, .content input[type="submit"]').forEach(function (b) {
         var teks = (b.textContent || b.value || '').toLowerCase();
         if (/hapus|delete|tutup|tolak/.test(teks)) { b.classList.add('btn-danger-line'); }
+        if (/setuju|terima|approve/.test(teks)) { b.classList.add('btn-ok'); }
     });
 
     // 3. Ikon pada tombol dan tautan aksi
@@ -34,7 +35,7 @@
         [/^(simpan|perbarui)/, 'bi-check2-circle'], [/^cari/, 'bi-search'], [/^tutup/, 'bi-lock'],
         [/^buka/, 'bi-unlock'], [/^kembali/, 'bi-arrow-left'], [/^daftar/, 'bi-person-plus'],
         [/^masuk/, 'bi-box-arrow-in-right'], [/^keluar/, 'bi-box-arrow-right'],
-        [/^(isi nilai|periksa|lihat)/, 'bi-eye'], [/^(setuju|aktifkan)/, 'bi-check-lg'],
+        [/^(isi nilai|periksa|lihat|detail)/, 'bi-eye'], [/^(setuju|terima|aktifkan)/, 'bi-check-lg'],
         [/^tolak/, 'bi-x-lg'], [/^ajukan/, 'bi-send']
     ];
     document.querySelectorAll('.topbar button, .topbar a:not(.brand), .content a, .content button, .auth-card a, .auth-card button').forEach(function (el) {
@@ -73,4 +74,65 @@
             }
         }
     }
+    // 5. "Filter: A B C" menjadi tab berbentuk pil
+    document.querySelectorAll('.content p, .content div').forEach(function (el) {
+        if (el.children.length < 2 || el.querySelector('table, form, p, div')) { return; }
+        var awal = el.firstChild;
+        if (!awal || awal.nodeType !== 3 || !/^\s*filter\s*:/i.test(awal.textContent)) { return; }
+        var tabs = document.createElement('div');
+        tabs.className = 'tabs';
+        var label = document.createElement('span');
+        label.className = 'tabs-label';
+        label.textContent = 'Filter';
+        tabs.appendChild(label);
+        Array.prototype.slice.call(el.children).forEach(function (c) {
+            var teks = c.textContent.trim();
+            if (!teks) { return; }
+            var aktif = c.tagName === 'STRONG' || c.tagName === 'B' || !!c.querySelector('strong, b');
+            var a = c.tagName === 'A' ? c : c.querySelector('a');
+            var t = document.createElement(a ? 'a' : 'span');
+            if (a) { t.href = a.href; }
+            t.className = 'tab' + (aktif ? ' active' : '');
+            t.textContent = teks;
+            tabs.appendChild(t);
+        });
+        el.replaceWith(tabs);
+    });
+
+    // 6. Tabel yang hanya berisi "Tidak ada data" menjadi tampilan kosong yang ramah
+    document.querySelectorAll('.content table').forEach(function (tabel) {
+        var baris = tabel.querySelectorAll('tbody tr');
+        if (baris.length !== 1) { return; }
+        var teks = baris[0].textContent.trim();
+        if (!/^(tidak ada data|belum ada|data kosong|tidak ditemukan)/i.test(teks)) { return; }
+        var h = document.querySelector('.content h1');
+        var krs = h && h.textContent.toLowerCase().indexOf('krs') !== -1;
+        var kotak = document.createElement('div');
+        kotak.className = 'kosong';
+        var ic = document.createElement('i');
+        ic.className = 'bi bi-inbox';
+        var judul = document.createElement('strong');
+        judul.textContent = krs ? 'Belum ada pengajuan KRS' : 'Belum ada data';
+        var ket = document.createElement('span');
+        ket.textContent = krs ? 'Pengajuan dari mahasiswa akan muncul di sini. Coba ganti filter di atas.' : teks;
+        kotak.appendChild(ic);
+        kotak.appendChild(judul);
+        kotak.appendChild(ket);
+        tabel.replaceWith(kotak);
+    });
+
+    // 7. NIM/kode pada kolom pertama tampil dengan huruf berspasi tetap
+    document.querySelectorAll('.halaman td:first-child').forEach(function (td) {
+        var t = td.textContent.trim();
+        if (!td.children.length && /^[0-9A-Za-z\-]{5,16}$/.test(t) && /\d{4,}/.test(t)) { td.classList.add('sel-kode'); }
+    });
+
+    // 8. "Total SKS: 20", "Status: ..." dan sejenisnya menjadi lencana ringkasan
+    document.querySelectorAll('.halaman p, .halaman div, .halaman span').forEach(function (el) {
+        if (el.children.length > 1 || el.closest('table, .tabs, .menu, .topbar, .kosong')) { return; }
+        var t = el.textContent.trim();
+        if (t.length < 60 && /^(total sks|jumlah sks|sks diambil|batas sks|status( krs| pengajuan)?|semester)\s*[:\-]/i.test(t)) {
+            el.classList.add('ringkasan');
+        }
+    });
 })();
